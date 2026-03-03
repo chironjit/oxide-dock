@@ -22,6 +22,9 @@ test-results/
 playwright-report/
 coverage/
 
+# Worktrees
+.worktrees/
+
 # Env
 .env
 .env.local

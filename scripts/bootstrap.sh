@@ -13,9 +13,16 @@ echo ""
 read -rp "App name (e.g. MyApp): " APP_NAME
 read -rp "Package name (lowercase, e.g. myapp): " PKG_NAME
 read -rp "Bundle identifier (e.g. com.example.myapp): " BUNDLE_ID
+read -rp "Initial version [0.0.1]: " VERSION
+VERSION="${VERSION:-0.0.1}"
 
 if [[ -z "$APP_NAME" || -z "$PKG_NAME" || -z "$BUNDLE_ID" ]]; then
   echo "Error: All fields are required."
+  exit 1
+fi
+
+if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+  echo "Error: Version must be valid semver (e.g. 0.0.1, 1.2.3)."
   exit 1
 fi
 
@@ -24,7 +31,7 @@ SAFE_PKG_NAME=$(sed_escape "$PKG_NAME")
 SAFE_BUNDLE_ID=$(sed_escape "$BUNDLE_ID")
 
 echo ""
-echo "Renaming OxideDock → $APP_NAME ($PKG_NAME)"
+echo "Renaming OxideDock → $APP_NAME ($PKG_NAME) v$VERSION"
 echo ""
 
 # package.json
@@ -70,6 +77,18 @@ sed -i.bak "s/\"OxideDock\"/\"$SAFE_APP_NAME\"/g" src-tauri/src/commands.rs
 
 # release.yml — release name
 sed -i.bak "s/OxideDock/$SAFE_APP_NAME/" .github/workflows/release.yml
+
+# Version — update all version sources
+CURRENT_VERSION="0.4.0"
+sed -i.bak "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$VERSION\"/" package.json
+sed -i.bak "s/version = \"$CURRENT_VERSION\"/version = \"$VERSION\"/" src-tauri/Cargo.toml
+sed -i.bak "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$VERSION\"/" src-tauri/tauri.conf.json
+sed -i.bak "s/\"$CURRENT_VERSION\"/\"$VERSION\"/" .github/.release-please-manifest.json
+
+# Changelog — start fresh
+cat > CHANGELOG.md << 'CHANGELOG_EOF'
+# Changelog
+CHANGELOG_EOF
 
 # Clean up .bak files
 find . -name "*.bak" -delete
