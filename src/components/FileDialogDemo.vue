@@ -15,6 +15,7 @@ async function openFile() {
   try {
     const selected = await open({
       multiple: false,
+      defaultPath: filePath.value ?? undefined,
       filters: [
         {
           name: 'Text',
