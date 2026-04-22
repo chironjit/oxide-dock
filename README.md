@@ -21,6 +21,33 @@ The `main` branch of this repository will reflect and follow the upstream branch
 
 Fixes, additions, etc to the upstream template should be started from the `main` branch.
 
+## Quick Start
+
+```bash
+# Clone the template
+git clone https://github.com/fridzema/oxide-dock.git
+cd oxide-dock
+
+# Change branch name
+git branch -m template main
+git push -u origin main
+
+# Setup lefthook for checking commits
+bunx lefthook install
+
+# Verify prerequisites (Rust, Bun)
+make check
+
+# Install dependencies
+make setup
+
+# (Optional) Rename the project to your own app
+make bootstrap
+
+# Start development
+make dev
+```
+
 ## Why OxideDock?
 
 Starting a Tauri app from scratch means wiring up routing, state management, testing, linting, CI/CD, and release pipelines yourself. OxideDock gives you all of that out of the box so you can skip the boilerplate and start building your app from day one.
@@ -55,26 +82,6 @@ Starting a Tauri app from scratch means wiring up routing, state management, tes
 - [Rust](https://www.rust-lang.org/tools/install) (latest stable)
 - [Bun](https://bun.sh/) (v1.0+)
 - [Tauri v2 system dependencies](https://v2.tauri.app/start/prerequisites/) for your OS
-
-## Quick Start
-
-```bash
-# Clone the template
-git clone https://github.com/fridzema/oxide-dock.git
-cd oxide-dock
-
-# Verify prerequisites (Rust, Bun)
-make check
-
-# Install dependencies
-make setup
-
-# (Optional) Rename the project to your own app
-make bootstrap
-
-# Start development
-make dev
-```
 
 ## Project Structure
 
