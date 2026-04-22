@@ -79,7 +79,7 @@ sed -i.bak "s/\"OxideDock\"/\"$SAFE_APP_NAME\"/g" src-tauri/src/commands.rs
 sed -i.bak "s/OxideDock/$SAFE_APP_NAME/" .github/workflows/release.yml
 
 # Version — update all version sources
-CURRENT_VERSION="0.4.0"
+CURRENT_VERSION=$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' package.json | head -1)
 sed -i.bak "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$VERSION\"/" package.json
 sed -i.bak "s/version = \"$CURRENT_VERSION\"/version = \"$VERSION\"/" src-tauri/Cargo.toml
 sed -i.bak "s/\"version\": \"$CURRENT_VERSION\"/\"version\": \"$VERSION\"/" src-tauri/tauri.conf.json
