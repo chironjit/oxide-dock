@@ -14,6 +14,13 @@ OxideDock is a Rust + Vue 3 desktop starter built on Tauri v2 — native perform
   <img src=".art/screens/screen.png" alt="OxideDock screenshot" width="700" />
 </p>
 
+## Oxide Dock Template
+The default branch of this repository is the `template` branch. The `template` branch will be the one used to make apps, as this will reflect my additions, fixes, modifications, etc.
+
+The `main` branch of this repository will reflect and follow the upstream branch (`fridzema/oxide-dock`).
+
+Fixes, additions, etc to the upstream template should be started from the `main` branch.
+
 ## Why OxideDock?
 
 Starting a Tauri app from scratch means wiring up routing, state management, testing, linting, CI/CD, and release pipelines yourself. OxideDock gives you all of that out of the box so you can skip the boilerplate and start building your app from day one.
